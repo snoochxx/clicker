@@ -147,8 +147,12 @@ public class MainActivity extends AppCompatActivity {
         if (Primogems >= 160) {
             Wishes++;
             Primogems -= 160;
-            TextView txt = findViewById(R.id.Wishes);
-            txt.setText("Wishes: " + Wishes.toString());
+            TextView wishesTextView = findViewById(R.id.Wishes);
+            wishesTextView.setText("Wishes: " + Wishes);
+            TextView primogemsTextView = findViewById(R.id.Primogems);
+            primogemsTextView.setText("Gems: " + Primogems);
+        } else {
+            Toast.makeText(this, "Недостаточно примогемов!", Toast.LENGTH_SHORT).show();
         }
     }
 
