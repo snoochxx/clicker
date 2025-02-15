@@ -105,13 +105,13 @@ public class MainActivity extends AppCompatActivity {
         ViewGroup.MarginLayoutParams params2 = (ViewGroup.MarginLayoutParams) primogemsTextView.getLayoutParams();
         Button button = findViewById(R.id.button);
         ViewGroup.MarginLayoutParams params3 = (ViewGroup.MarginLayoutParams) button.getLayoutParams();
-        // изображение
+        
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             imageView.setVisibility(View.GONE);
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             imageView.setVisibility(View.VISIBLE);
         }
-        // текст Крутки
+        
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             params.topMargin = (int) TypedValue.applyDimension(
                     TypedValue.COMPLEX_UNIT_DIP, -20, getResources().getDisplayMetrics()
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                     TypedValue.COMPLEX_UNIT_DIP, 0, getResources().getDisplayMetrics()
             );
         }
-        // текст Гемы
+        
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             params2.topMargin = (int) TypedValue.applyDimension(
                     TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics()
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     TypedValue.COMPLEX_UNIT_DIP, 0, getResources().getDisplayMetrics()
             );
         }
-        // кнопка give primogem
+        
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             params3.topMargin = (int) TypedValue.applyDimension(
                     TypedValue.COMPLEX_UNIT_DIP, 145, getResources().getDisplayMetrics()
