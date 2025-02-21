@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,8 +24,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Integer Primogems = 0;
     private Integer Wishes = 0;
-    private TextView wishesTextView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +44,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("Primogems", Primogems);
         Log.d("save", Primogems.toString());
         Toast.makeText(this, "onStart!", Toast.LENGTH_LONG).show();
     }
     @Override
-    protected void onRestoreInstanceState(Bundle SavedState){
+    protected void onRestoreInstanceState(@NonNull Bundle SavedState){
         super.onRestoreInstanceState(SavedState);
         Log.d("res", Primogems.toString());
         if(SavedState.containsKey("Primogems")){
@@ -98,20 +97,28 @@ public class MainActivity extends AppCompatActivity {
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
-        ImageView imageView = findViewById(R.id.imageView13);
         TextView wishesTextView = findViewById(R.id.Wishes);
         ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) wishesTextView.getLayoutParams();
         TextView primogemsTextView = findViewById(R.id.Primogems);
         ViewGroup.MarginLayoutParams params2 = (ViewGroup.MarginLayoutParams) primogemsTextView.getLayoutParams();
         Button button = findViewById(R.id.button);
         ViewGroup.MarginLayoutParams params3 = (ViewGroup.MarginLayoutParams) button.getLayoutParams();
-        
+        LinearLayout layout = findViewById(R.id.main_layout);
+
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            imageView.setVisibility(View.GONE);
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            imageView.setVisibility(View.VISIBLE);
+            if (isLightBackground) {
+                layout.setBackgroundColor(getResources().getColor(android.R.color.white));
+            } else {
+                layout.setBackgroundColor(getResources().getColor(android.R.color.black));
+            }
+        } else {
+            if (isLightBackground) {
+                layout.setBackgroundResource(R.drawable.__7);
+            } else {
+                layout.setBackgroundResource(R.drawable.__6);
+            }
         }
-        
+
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             params.topMargin = (int) TypedValue.applyDimension(
                     TypedValue.COMPLEX_UNIT_DIP, -20, getResources().getDisplayMetrics()
@@ -121,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     TypedValue.COMPLEX_UNIT_DIP, 0, getResources().getDisplayMetrics()
             );
         }
-        
+
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             params2.topMargin = (int) TypedValue.applyDimension(
                     TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics()
@@ -131,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                     TypedValue.COMPLEX_UNIT_DIP, 0, getResources().getDisplayMetrics()
             );
         }
-        
+
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             params3.topMargin = (int) TypedValue.applyDimension(
                     TypedValue.COMPLEX_UNIT_DIP, 145, getResources().getDisplayMetrics()
@@ -143,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     public void onClickButton2(View view) {
         if (Primogems >= 160) {
             Wishes++;
@@ -154,6 +162,50 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Недостаточно примогемов!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private boolean isLightBackground = false;
+
+    public void changeBackground(View view) {
+        LinearLayout layout = findViewById(R.id.main_layout);
+        Button button = (Button) view;
+
+        TextView wishesTextView = findViewById(R.id.Wishes);
+        TextView primogemsTextView = findViewById(R.id.Primogems);
+        Button buyWishButton = findViewById(R.id.button2);
+        Button givePrimogemButton = findViewById(R.id.button);
+
+        int currentOrientation = getResources().getConfiguration().orientation;
+
+        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            if (isLightBackground) {
+                layout.setBackgroundColor(getResources().getColor(android.R.color.black));
+                button.setText("Light");
+                button.setTextColor(getResources().getColor(android.R.color.white));
+            } else {
+                layout.setBackgroundColor(getResources().getColor(android.R.color.white));
+                button.setText("Dark");
+                button.setTextColor(getResources().getColor(android.R.color.black));
+            }
+        } else {
+            if (isLightBackground) {
+                layout.setBackgroundResource(R.drawable.__6);
+                button.setText("Light");
+                button.setTextColor(getResources().getColor(android.R.color.white));
+            } else {
+                layout.setBackgroundResource(R.drawable.__7);
+                button.setText("Dark");
+                button.setTextColor(getResources().getColor(android.R.color.black));
+            }
+        }
+
+        int textColor = isLightBackground ? getResources().getColor(android.R.color.white) : getResources().getColor(android.R.color.black);
+        wishesTextView.setTextColor(textColor);
+        primogemsTextView.setTextColor(textColor);
+        buyWishButton.setTextColor(textColor);
+        givePrimogemButton.setTextColor(textColor);
+
+        isLightBackground = !isLightBackground;
     }
 
 }
